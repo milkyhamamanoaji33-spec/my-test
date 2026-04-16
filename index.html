@@ -1,1 +1,187 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dog Lovers - ワンちゃんの魅力</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+            background-color: #fffaf0;
+        }
 
+        .hero-gradient {
+            background: linear-gradient(135deg, #ffed4a 0%, #ff9800 100%);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            transition: all 0.3s ease;
+        }
+
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #ff9800;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-orange-500 flex items-center gap-2">
+                <i class="fas fa-paw"></i> ワンダフル・ライフ
+            </h1>
+            <nav class="hidden md:flex gap-6 font-medium">
+                <a href="#home" class="hover:text-orange-500">ホーム</a>
+                <a href="#gallery" class="hover:text-orange-500">ギャラリー</a>
+                <a href="#points" class="hover:text-orange-500">魅力の秘密</a>
+                <a href="#generate" class="bg-orange-500 text-white px-4 py-2 rounded-full hover:bg-orange-600 transition">癒やしを生成</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-gradient py-20 text-white text-center px-4">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-4xl md:text-6xl font-bold mb-6">世界を救う、この可愛さ。</h2>
+            <p class="text-xl mb-8 opacity-90">尻尾を振る音、つぶらな瞳、温かい体温。犬たちは私たちの人生を豊かにしてくれる最高のパートナーです。</p>
+            <div class="flex justify-center gap-4">
+                <a href="#gallery" class="bg-white text-orange-500 font-bold px-8 py-3 rounded-full shadow-lg hover:bg-orange-50 transition">もっと見る</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Points Section -->
+    <section id="points" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h3 class="text-3xl font-bold text-center mb-12">犬が可愛い3つの理由</h3>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center p-6 rounded-2xl bg-orange-50 card-hover">
+                    <div class="text-5xl mb-4 text-orange-500"><i class="fas fa-heart"></i></div>
+                    <h4 class="text-xl font-bold mb-2">無償の愛</h4>
+                    <p class="text-gray-600">あなたがどんな時でも、全力の笑顔と尻尾のフリで迎えてくれます。</p>
+                </div>
+                <div class="text-center p-6 rounded-2xl bg-orange-50 card-hover">
+                    <div class="text-5xl mb-4 text-orange-500"><i class="fas fa-smile-beam"></i></div>
+                    <h4 class="text-xl font-bold mb-2">豊かな表情</h4>
+                    <p class="text-gray-600">首をかしげたり、上目遣いをしたり。言葉はなくても心で通じ合えます。</p>
+                </div>
+                <div class="text-center p-6 rounded-2xl bg-orange-50 card-hover">
+                    <div class="text-5xl mb-4 text-orange-500"><i class="fas fa-cloud"></i></div>
+                    <h4 class="text-xl font-bold mb-2">ふわふわの魔法</h4>
+                    <p class="text-gray-600">その毛並みに触れるだけで、日々のストレスが魔法のように消えていきます。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Image Generation Section -->
+    <section id="generate" class="py-16 bg-orange-100">
+        <div class="container mx-auto px-4 text-center">
+            <h3 class="text-3xl font-bold mb-4">AIで癒やしを生成する</h3>
+            <p class="mb-8 text-gray-700">あなたの今の気分に合わせて、最高のワンちゃん画像をお届けします。</p>
+            
+            <div class="max-w-2xl mx-auto bg-white p-8 rounded-3xl shadow-xl">
+                <div class="flex flex-col md:flex-row gap-4 mb-6">
+                    <input id="dogPrompt" type="text" placeholder="例: 芝生で遊ぶ柴犬、眠そうなゴールデンレトリバー" 
+                           class="flex-1 px-4 py-3 rounded-xl border-2 border-orange-200 focus:border-orange-500 outline-none">
+                    <button onclick="generateDogImage()" class="bg-orange-500 text-white px-6 py-3 rounded-xl font-bold hover:bg-orange-600 transition flex items-center justify-center gap-2">
+                        <i class="fas fa-magic"></i> 生成する
+                    </button>
+                </div>
+
+                <div id="loadingArea" class="hidden flex flex-col items-center justify-center py-10">
+                    <div class="loader mb-4"></div>
+                    <p class="text-orange-600 animate-pulse">可愛いワンちゃんを連れてきています...</p>
+                </div>
+
+                <div id="imageDisplay" class="rounded-2xl overflow-hidden shadow-inner bg-gray-50 min-h-[300px] flex items-center justify-center border-2 border-dashed border-gray-200">
+                    <p class="text-gray-400">ここに画像が表示されます</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-2xl font-bold mb-4 text-orange-400"><i class="fas fa-paw"></i> Every Dog is a Good Dog</p>
+            <p class="opacity-60 text-sm">© 2024 ワンダフル・ライフ ギャラリー. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const apiKey = ""; // API key is provided by the environment
+
+        async function generateDogImage() {
+            const promptInput = document.getElementById('dogPrompt');
+            const userText = promptInput.value || "可愛すぎる子犬のクローズアップ、高画質、幸せそうな表情";
+            const loadingArea = document.getElementById('loadingArea');
+            const imageDisplay = document.getElementById('imageDisplay');
+
+            // UIの更新
+            loadingArea.classList.remove('hidden');
+            imageDisplay.innerHTML = '';
+            imageDisplay.classList.add('hidden');
+
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        instances: [{ prompt: `A very cute, high-quality, professional photography of: ${userText}` }],
+                        parameters: { sampleCount: 1 }
+                    })
+                });
+
+                if (!response.ok) throw new Error('生成に失敗しました');
+
+                const result = await response.json();
+                const base64Image = result.predictions[0].bytesBase64Encoded;
+                const imageUrl = `data:image/png;base64,${base64Image}`;
+
+                // 画像の表示
+                imageDisplay.innerHTML = `<img src="${imageUrl}" alt="Generated Dog" class="w-full h-auto object-cover animate-fade-in">`;
+                imageDisplay.classList.remove('hidden');
+            } catch (error) {
+                console.error(error);
+                imageDisplay.innerHTML = `<div class="p-4 text-red-500">
+                    <i class="fas fa-exclamation-triangle text-2xl mb-2"></i>
+                    <p>ワンちゃんがお散歩に行ってしまったようです。もう一度試してください。</p>
+                </div>`;
+                imageDisplay.classList.remove('hidden');
+            } finally {
+                loadingArea.classList.add('hidden');
+            }
+        }
+
+        // Add CSS for fade-in
+        const style = document.createElement('style');
+        style.textContent = `
+            .animate-fade-in {
+                animation: fadeIn 0.8s ease-out;
+            }
+            @keyframes fadeIn {
+                from { opacity: 0; transform: scale(0.95); }
+                to { opacity: 1; transform: scale(1); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
